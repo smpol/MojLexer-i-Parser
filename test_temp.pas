@@ -1,5 +1,6 @@
 program test;
       begin
+      		a := a-1;
             if a = 0 then 
                   begin
                         write('ssssss');
@@ -20,5 +21,9 @@ program test;
 		                writeln('Podana liczba jest ujemna.');
 		          end;
 	      end
+	      while a > 0 do
+		begin
+			a := a-1;
+		end
       end
 end.

@@ -79,13 +79,40 @@ srodek_blok: srodek_blok funkcja
             | funkcja srodek_blok
             | TBEGIN srodek_blok END 
             | if srodek_blok
+            | while srodek_blok
             | WRITE W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITE\n");}
             | WRITELN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITELN\n");}
             | READ W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READ\n");}
             | READLN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READLN\n");}
             | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
+            | przypisanie_wartosci srodek_blok
             | 
             ;
+przypisanie_wartosci: NAZWA ASSIGN operacje_matematyczne SREDNIK
+                    | NAZWA ASSIGN NAZWA SREDNIK
+                    | ;
+operacje_matematyczne: NAZWA operator_mat operacje_matematyczne
+                    | CYFRY operator_mat operacje_matematyczne;
+                    | CYFRY_FLOAT operator_mat operacje_matematyczne;
+                    | ;
+operator_mat: '+'
+            | '-'
+            | '*'
+            | '/'
+            | ROWNE
+            | ;
+
+while: WHILE warunek_while DO srodek_blok
+            ;
+warunek_while: NAZWA warunek_while
+            | CYFRY warunek_while
+            | CYFRY_FLOAT warunek_while
+            | MNIEJSZE warunek_while
+            | WIEKSZE warunek_while
+            | MNIEJSZEROWNE warunek_while
+            | WIEKSZEROWNE warunek_while
+            | ROWNE warunek_while
+            | ;
 
 if         : IF warunek_if warunek_symbol warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK
             ;
