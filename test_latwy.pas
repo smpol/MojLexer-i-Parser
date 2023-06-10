@@ -37,18 +37,18 @@ begin
 	a:=20;
 	b:='napis';
 	if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
-  	begin
-    		writeln('if');
-  	end
-	else if a = 0 then 
-	begin
-		write('ssssss');
-	end
+		begin
+				writeln('if');
+		end
+	else 
+	if a = 0 then 
+		begin
+			write('ssssss');
+		end
   	else 
   	begin
     		writeln('Podana liczba jest ujemna.');
-  	end
-	;
+  	end;
 	
 	write('siema');
 	writeln('siema2');

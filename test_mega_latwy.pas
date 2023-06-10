@@ -16,12 +16,20 @@ program test;
 		writeln('test');
 		read(a);
 		readln(b);
-      
+		if a = 0 then 
+                  begin
+                        write('ssssss');
+                  end
+            else 
+                  begin
+                        writeln('Podana liczba jest ujemna.');
+                  end
+            ;
 	      function funkcja (n:string):integer; 
 		    begin
 		          {test}
 		          write(test);
-	      end
+	            end
 	      function funk2cja (n:integer; s:string):integer;
 		    const
 		          a=20;
@@ -29,6 +37,14 @@ program test;
 		          a, i, j, k:integer;
 		    begin
 		          write('siema');
-	      end
+                      if a = 0 then 
+                        begin
+                              write('ssssss');
+                        end
+                        else 
+                              begin
+                                    writeln('Podana liczba jest ujemna.');
+                              end;
+	            end
       end
 end.

@@ -4,6 +4,7 @@
 
 int yyerror(char *);
 extern int yylval;
+extern int line_count;
 
 int lines = 0;
 int variables = 0;
@@ -75,11 +76,36 @@ pocz_blok   : W_KLAMRA pocz_blok {printf(" Wykryto komentarz\n");}
 
 srodek_blok: srodek_blok funkcja
             | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
-            | funkcja
+            | funkcja srodek_blok
             | TBEGIN srodek_blok END 
-            | funkcje_srodek_dalej
-            |
+            | if srodek_blok
+            | WRITE W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITE\n");}
+            | WRITELN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITELN\n");}
+            | READ W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READ\n");}
+            | READLN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READLN\n");}
+            | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
+            | 
             ;
+
+if         : IF warunek_if warunek_symbol warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK
+            ;
+
+/* warunek_if : NAZWA warunek_if
+            | CYFRY warunek_if
+            | CYFRY_FLOAT warunek_if
+            | MNIEJSZE warunek_if
+            | WIEKSZE warunek_if
+            | MNIEJSZEROWNE warunek_if
+            | WIEKSZEROWNE warunek_if
+            | ROWNE warunek_if
+            | ; */
+warunek_if : NAZWA |CYFRY | CYFRY_FLOAT;
+warunek_symbol: MNIEJSZE 
+                | WIEKSZE
+                | MNIEJSZEROWNE
+                | WIEKSZEROWNE
+                | ROWNE
+                | '!' ROWNE ;
 
 
 
@@ -103,6 +129,7 @@ funkcje_srodek_poczatek: zmienne funkcje_srodek_poczatek
                 | zmienne stale funkcje_srodek_poczatek
                 | stale zmienne funkcje_srodek_poczatek
                 | TBEGIN funkcje_srodek_dalej
+                | if funkcje_srodek_dalej
                 | W_KLAMRA funkcje_srodek_poczatek {printf(" Wykryto komentarz\n");}
                 ;
 funkcje_srodek_dalej:
@@ -111,6 +138,7 @@ funkcje_srodek_dalej:
                 | READ W_NAWIAS SREDNIK funkcje_srodek_dalej {printf("Wywolanie funkcji READ\n");}
                 | READLN W_NAWIAS SREDNIK funkcje_srodek_dalej {printf("Wywolanie funkcji READLN\n");}
                 | W_KLAMRA funkcje_srodek_dalej {printf(" Wykryto komentarz\n");}
+                | if funkcje_srodek_dalej
                 |
                 ;
 
@@ -183,14 +211,15 @@ int main() {
     /* printf("Liczba linii: %d\n", lines); */
     if (skanowanie_wykonane == 1)
     {
-            printf("Liczba zmiennych: %d\n", liczba_zmiennych);
-    printf("Liczba stałych: %d\n", liczba_stalych);
-    printf("Liczba zmiennych typu int: %d\n", liczba_int);
-    printf("Liczba zmiennych typu real: %d\n", liczba_real);
-    printf("Liczba zmiennych typu boolean: %d\n", liczba_boolean);
-    printf("Liczba zmiennych typu character: %d\n", liczba_character);
-    printf("Liczba zmiennych typu string: %d\n", liczba_string);
-    printf("Liczba tablic: %d\n", liczba_tablic);
+        printf("Liczba linii: %d\n", line_count);
+        printf("Liczba zmiennych: %d\n", liczba_zmiennych);
+        printf("Liczba stałych: %d\n", liczba_stalych);
+        printf("Liczba zmiennych typu int: %d\n", liczba_int);
+        printf("Liczba zmiennych typu real: %d\n", liczba_real);
+        printf("Liczba zmiennych typu boolean: %d\n", liczba_boolean);
+        printf("Liczba zmiennych typu character: %d\n", liczba_character);
+        printf("Liczba zmiennych typu string: %d\n", liczba_string);
+        printf("Liczba tablic: %d\n", liczba_tablic);
     }
 
 

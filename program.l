@@ -4,6 +4,7 @@
     #include <stdio.h>
     #include <string.h>
     #include "y.tab.h"
+    int line_count=1;
 %}
 
 string_text '[^']*'
@@ -84,4 +85,5 @@ integer_with_dot [0-9]+\.[0-9]+
 
 {string_text}   {return NAPIS;}
 [ \t\r]         ;  // Pomijaj białe znaki i znaki nowej linii
+\n              {line_count++;}
 %%
