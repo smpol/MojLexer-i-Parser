@@ -80,6 +80,7 @@ srodek_blok: srodek_blok funkcja
             | TBEGIN srodek_blok END 
             | if srodek_blok
             | while srodek_blok
+            | for srodek_blok
             | WRITE W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITE\n");}
             | WRITELN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITELN\n");}
             | READ W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READ\n");}
@@ -87,6 +88,11 @@ srodek_blok: srodek_blok funkcja
             | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
             | przypisanie_wartosci srodek_blok
             | 
+            ;
+
+for: FOR NAZWA ASSIGN CYFRY TO CYFRY DO srodek_blok
+            | FOR NAZWA ASSIGN CYFRY DOWNTO CYFRY DO srodek_blok
+            | FOR NAZWA ASSIGN CYFRY TO NAZWA DO srodek_blok
             ;
 przypisanie_wartosci: NAZWA ASSIGN operacje_matematyczne SREDNIK
                     | NAZWA ASSIGN NAZWA SREDNIK
