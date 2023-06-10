@@ -1,0 +1,15 @@
+program HelloWorld;
+begin
+	a := b;
+	if(a>b) then
+		begin
+			while(2.3 < b) do
+				begin
+				end;
+			b := b + 5;
+		end;
+	else
+		begin
+		end;
+end;
+.
