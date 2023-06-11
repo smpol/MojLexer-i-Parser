@@ -37,7 +37,7 @@ function funk2cja (n:integer; s:string):integer;
             function funkcja (n:string):integer; 
 	      begin
 		    write(test);
-		   	 if a = 0 then 
+		   	 if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
 		          begin
 		                write('ssssss');
 		          end

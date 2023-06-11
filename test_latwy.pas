@@ -41,11 +41,6 @@ begin
 				writeln('if');
 		end
 	else 
-	if a = 0 then 
-		begin
-			write('ssssss');
-		end
-  	else 
   	begin
     		writeln('Podana liczba jest ujemna.');
   	end;

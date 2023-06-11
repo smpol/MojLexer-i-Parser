@@ -8,6 +8,7 @@ program test;
             napis = 'string';
       var
             {test}
+            a, b, c, d, e, f, g, h, i, j, k, l, m, n: integer;
             radius: array [2..5] of integer;
             area: real; 
             force: real;
@@ -16,15 +17,22 @@ program test;
 		writeln('test');
 		read(a);
 		readln(b);
-		if a = 0 then 
+            for wi:=1 to m do
+                  begin
+                        a:=wi;
+                  end
+	if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
                   begin
                         write('ssssss');
                   end
             else 
                   begin
                         writeln('Podana liczba jest ujemna.');
-                  end
-            ;
+                  end;
+              repeat
+    		writeln('siema');
+    		liczba := liczba + 1;
+  		until liczba > 10;
 	      function funkcja (n:string):integer; 
 		    begin
 		          {test}

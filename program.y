@@ -87,8 +87,20 @@ srodek_blok: srodek_blok funkcja
             | READLN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READLN\n");}
             | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
             | przypisanie_wartosci srodek_blok
-            | 
+            | repeat srodek_blok
+            |
             ;
+repeat: REPEAT srodek_blok UNTIL warunek_repeat SREDNIK
+            ;
+warunek_repeat: NAZWA warunek_repeat
+            | CYFRY warunek_repeat
+            | CYFRY_FLOAT warunek_repeat
+            | MNIEJSZE warunek_repeat
+            | WIEKSZE warunek_repeat
+            | MNIEJSZEROWNE warunek_repeat
+            | WIEKSZEROWNE warunek_repeat
+            | ROWNE warunek_repeat
+            | ;
 
 for: FOR NAZWA ASSIGN CYFRY TO CYFRY DO srodek_blok
             | FOR NAZWA ASSIGN CYFRY DOWNTO CYFRY DO srodek_blok
@@ -120,10 +132,10 @@ warunek_while: NAZWA warunek_while
             | ROWNE warunek_while
             | ;
 
-if         : IF warunek_if warunek_symbol warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK
+if         : IF warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK
             ;
 
-/* warunek_if : NAZWA warunek_if
+warunek_if : NAZWA warunek_if
             | CYFRY warunek_if
             | CYFRY_FLOAT warunek_if
             | MNIEJSZE warunek_if
@@ -131,14 +143,19 @@ if         : IF warunek_if warunek_symbol warunek_if THEN srodek_blok ELSE srode
             | MNIEJSZEROWNE warunek_if
             | WIEKSZEROWNE warunek_if
             | ROWNE warunek_if
-            | ; */
-warunek_if : NAZWA |CYFRY | CYFRY_FLOAT;
+            | AND warunek_if
+            | OR warunek_if
+            | NOT warunek_if
+            | ;
+/* if         : IF warunek_if warunek_symbol warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK
+            ; */
+/* warunek_if : NAZWA |CYFRY | CYFRY_FLOAT;
 warunek_symbol: MNIEJSZE 
                 | WIEKSZE
                 | MNIEJSZEROWNE
                 | WIEKSZEROWNE
                 | ROWNE
-                | '!' ROWNE ;
+                | '!' ROWNE ; */
 
 
 
@@ -189,7 +206,8 @@ zmienne: VAR deklaracje_zmiennych
 
 deklaracje_zmiennych: deklaracje_zmiennych zmienna SREDNIK
                     | zmienna SREDNIK
-                    | W_KLAMRA deklaracje_zmiennych {printf(" Wykryto komentarz\n");}
+                    | W_KLAMRA deklaracje_zmiennych {system("clear");
+                        ;printf(" Wykryto komentarz\n");}
                     ;
 zmienna:  NAZWA DWUKROPEK typ_zmiennej 
         | NAZWA PRZECINEK zmienna
