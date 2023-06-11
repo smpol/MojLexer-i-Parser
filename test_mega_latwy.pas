@@ -32,6 +32,11 @@ program test;
               repeat
     		writeln('siema');
     		liczba := liczba + 1;
+            procedure rozw_nies;
+            begin
+            writeln('NIE MA WARTOSCI OPTYMALNEJ');
+            halt
+            end;
   		until liczba > 10;
 	      function funkcja (n:string):integer; 
 		    begin

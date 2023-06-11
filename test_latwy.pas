@@ -32,41 +32,41 @@ begin
 write('ss');
 end
 
-begin
-	write('silnia');
-	a:=20;
-	b:='napis';
-	if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
+	begin
+		write('silnia');
+		a:=20;
+		b:='napis';
+		if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
+			begin
+					writeln('if');
+			end
+		else 
+	  	begin
+	    		writeln('Podana liczba jest ujemna.');
+	  	end;
+		
+		write('siema');
+		writeln('siema2');
+		read(a);
+		readln(b);
+	  	while a > 0 do
 		begin
-				writeln('if');
+			a := a-1;
 		end
-	else 
-  	begin
-    		writeln('Podana liczba jest ujemna.');
-  	end;
-	
-	write('siema');
-	writeln('siema2');
-	read(a);
-	readln(b);
-  	while a > 0 do
-	begin
-		a := a-1;
-	end
 
-	repeat
-    		writeln('siema');
-    		liczba := liczba + 1;
-  	until liczba > 10;
+		repeat
+	    		writeln('siema');
+	    		liczba := liczba + 1;
+	  	until liczba > 10;
 
-	for i:= 0 to a do
-	begin
-		read(a);
-	end
+		for i:= 0 to a do
+		begin
+			read(a);
+		end
 
-	for i:= 10 downto 0 do
-	begin
-		read(a);
+		for i:= 10 downto 0 do
+		begin
+			read(a);
+		end
 	end
 end.
-

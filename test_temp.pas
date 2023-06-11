@@ -24,35 +24,8 @@ function funk2cja (n:integer; s:string):integer;
       begin
 	write('siema');
       end
+
       begin
-      	a := a-1;
-            if a = 0 then 
-                  begin
-                        write('ssssss');
-                  end
-            else 
-                  begin
-                        writeln('Podana liczba jest ujemna.');
-                  end;
-            function funkcja (n:string):integer; 
-	      begin
-		    write(test);
-		   	 if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
-		          begin
-		                write('ssssss');
-		          end
-		   	 else 
-		          begin
-		                writeln('Podana liczba jest ujemna.');
-		          end;
-	      end
-	      while a > 0 do
-		begin
-			a := a-1;
-		end
-            for wi:=1 to m do
-                  begin
-                        writeln('Podana liczba jest ujemna.');
-                  end
+      
       end
 end.

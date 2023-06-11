@@ -14,6 +14,8 @@ int liczba_write = 0;
 int liczba_read = 0;
 int liczba_writeln = 0;
 int liczba_readln = 0;
+int liczba_procedur = 0;
+int liczba_if = 0;
 
 int liczba_int = 0;
 int liczba_real = 0;
@@ -21,6 +23,7 @@ int liczba_boolean = 0;
 int liczba_character = 0;
 int liczba_string = 0;
 int liczba_tablic = 0;
+int liczba_funkcji = 0;
 
 int skanowanie_wykonane = 0;
 
@@ -78,8 +81,13 @@ srodek_blok: srodek_blok funkcja
             | W_KLAMRA srodek_blok {liczba_komentarzy++;}
             | przypisanie_wartosci srodek_blok
             | repeat srodek_blok
-            |
+            | procedury_pascal srodek_blok
+            | HALT srodek_blok
+            | 
             ;
+
+procedury_pascal: TPROCEDURE NAZWA SREDNIK TBEGIN srodek_blok END SREDNIK {liczba_procedur++;}
+            ;            
 repeat: REPEAT srodek_blok UNTIL warunek_repeat SREDNIK
             ;
 warunek_repeat: NAZWA warunek_repeat
@@ -97,7 +105,8 @@ for: FOR NAZWA ASSIGN CYFRY TO CYFRY DO srodek_blok
             | FOR NAZWA ASSIGN CYFRY TO NAZWA DO srodek_blok
             ;
 przypisanie_wartosci: NAZWA ASSIGN operacje_matematyczne SREDNIK
-                    | NAZWA ASSIGN NAZWA SREDNIK
+                    | NAZWA ASSIGN NAPIS SREDNIK
+
                     | ;
 operacje_matematyczne: NAZWA operator_mat operacje_matematyczne
                     | CYFRY operator_mat operacje_matematyczne;
@@ -122,7 +131,7 @@ warunek_while: NAZWA warunek_while
             | ROWNE warunek_while
             | ;
 
-if         : IF warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK
+if         : IF warunek_if THEN srodek_blok ELSE srodek_blok SREDNIK {liczba_if++;}
             ;
 
 warunek_if : NAZWA warunek_if
@@ -149,8 +158,8 @@ warunek_symbol: MNIEJSZE
 
 
 
-funkcja: FUNCTION NAZWA W_NAWIAS DWUKROPEK typ_zmiennej_funkcja SREDNIK  funkcje_srodek_poczatek END funkcja
-        | FUNCTION NAZWA W_NAWIAS DWUKROPEK typ_zmiennej_funkcja SREDNIK funkcje_srodek_poczatek END
+funkcja: FUNCTION NAZWA W_NAWIAS DWUKROPEK typ_zmiennej_funkcja SREDNIK  funkcje_srodek_poczatek END funkcja {liczba_funkcji++;}
+        | FUNCTION NAZWA W_NAWIAS DWUKROPEK typ_zmiennej_funkcja SREDNIK funkcje_srodek_poczatek END {liczba_funkcji++;}
         ;
 
 /* funkcja_srodek: zmienne 
@@ -283,6 +292,12 @@ int main() {
             printf("Liczba instrukcji read: %d\n", liczba_read);
         if (liczba_readln > 0)
             printf("Liczba instrukcji readln: %d\n", liczba_readln);
+        if (liczba_if > 0)
+            printf("Liczba instrukcji if: %d\n", liczba_if);
+        if (liczba_procedur > 0)
+            printf("Liczba procedur: %d\n", liczba_procedur);
+        if (liczba_funkcji > 0)
+            printf("Liczba funkcji: %d\n", liczba_funkcji);
     }
     else
     {
