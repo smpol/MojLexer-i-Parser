@@ -6,22 +6,14 @@ int yyerror(char *);
 extern int yylval;
 extern int line_count;
 
-int lines = 0;
-int variables = 0;
-int consts = 0;
-int numIf = 0;
-int numWhile = 0;
-int numRepeat = 0;
-int numFor = 0;
-int numAssign = 0;
-int numBreak = 0;
-int numExit = 0;
-int numHalt = 0;
-int numWrite = 0;
-int numRead = 0;
 
 int liczba_zmiennych = 0;
 int liczba_stalych = 0;
+int liczba_komentarzy = 0;
+int liczba_write = 0;
+int liczba_read = 0;
+int liczba_writeln = 0;
+int liczba_readln = 0;
 
 int liczba_int = 0;
 int liczba_real = 0;
@@ -60,13 +52,11 @@ int skanowanie_wykonane = 0;
 
 %%
 poczatek    : PROGRAM NAZWA SREDNIK pocz_blok srodek_blok koniec  {
-            printf("-------------------------\n");
-            printf("\nKoniec skanowania\n"); 
             skanowanie_wykonane=1;
             return 0;}
             ;
 
-pocz_blok   : W_KLAMRA pocz_blok {printf(" Wykryto komentarz\n");}
+pocz_blok   : W_KLAMRA pocz_blok {liczba_komentarzy++;}
             | stale 
             | zmienne 
             | stale zmienne 
@@ -75,17 +65,17 @@ pocz_blok   : W_KLAMRA pocz_blok {printf(" Wykryto komentarz\n");}
             ;
 
 srodek_blok: srodek_blok funkcja
-            | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
+            | W_KLAMRA srodek_blok {liczba_komentarzy++;}
             | funkcja srodek_blok
             | TBEGIN srodek_blok END 
             | if srodek_blok
             | while srodek_blok
             | for srodek_blok
-            | WRITE W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITE\n");}
-            | WRITELN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji WRITELN\n");}
-            | READ W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READ\n");}
-            | READLN W_NAWIAS SREDNIK srodek_blok {printf("Wywolanie funkcji READLN\n");}
-            | W_KLAMRA srodek_blok {printf(" Wykryto komentarz\n");}
+            | WRITE W_NAWIAS SREDNIK srodek_blok {liczba_write++;}
+            | WRITELN W_NAWIAS SREDNIK srodek_blok {liczba_writeln++;}
+            | READ W_NAWIAS SREDNIK srodek_blok {liczba_read++;}
+            | READLN W_NAWIAS SREDNIK srodek_blok {liczba_readln++;}
+            | W_KLAMRA srodek_blok {liczba_komentarzy++;}
             | przypisanie_wartosci srodek_blok
             | repeat srodek_blok
             |
@@ -180,14 +170,14 @@ funkcje_srodek_poczatek: zmienne funkcje_srodek_poczatek
                 | stale zmienne funkcje_srodek_poczatek
                 | TBEGIN funkcje_srodek_dalej
                 | if funkcje_srodek_dalej
-                | W_KLAMRA funkcje_srodek_poczatek {printf(" Wykryto komentarz\n");}
+                | W_KLAMRA funkcje_srodek_poczatek {liczba_komentarzy++;}
                 ;
 funkcje_srodek_dalej:
-                | WRITE W_NAWIAS SREDNIK funkcje_srodek_dalej {printf("Wywolanie funkcji WRITE\n");}
-                | WRITELN W_NAWIAS SREDNIK funkcje_srodek_dalej {printf("Wywolanie funkcji WRITELN\n");}
-                | READ W_NAWIAS SREDNIK funkcje_srodek_dalej {printf("Wywolanie funkcji READ\n");}
-                | READLN W_NAWIAS SREDNIK funkcje_srodek_dalej {printf("Wywolanie funkcji READLN\n");}
-                | W_KLAMRA funkcje_srodek_dalej {printf(" Wykryto komentarz\n");}
+                | WRITE W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_write++;}
+                | WRITELN W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_writeln++;}
+                | READ W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_read++;}
+                | READLN W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_readln++;}
+                | W_KLAMRA funkcje_srodek_dalej {liczba_komentarzy++;}
                 | if funkcje_srodek_dalej
                 |
                 ;
@@ -207,7 +197,7 @@ zmienne: VAR deklaracje_zmiennych
 deklaracje_zmiennych: deklaracje_zmiennych zmienna SREDNIK
                     | zmienna SREDNIK
                     | W_KLAMRA deklaracje_zmiennych {system("clear");
-                        ;printf(" Wykryto komentarz\n");}
+                        ;liczba_komentarzy++;}
                     ;
 zmienna:  NAZWA DWUKROPEK typ_zmiennej 
         | NAZWA PRZECINEK zmienna
@@ -241,7 +231,7 @@ stale : CONST deklaracje_stalych
 deklaracje_stalych: 
                 deklaracje_stalych stala SREDNIK {liczba_stalych++;}
                 | stala SREDNIK {liczba_stalych++;}
-                | W_KLAMRA deklaracje_stalych {printf(" Wykryto komentarz\n");}
+                | W_KLAMRA deklaracje_stalych {liczba_komentarzy++;}
                 ;
 
 stala: NAZWA ROWNE wartosc_przypisana
@@ -258,19 +248,45 @@ koniec: END KROPKA;
 int main() {
     printf("Początek skanowania ...\n");
     yyparse();
-    /* printf("Koniec skanowania.\n"); */
+    fflush(stdout);
+    system("clear");
+    printf("Koniec skanowania.\n");
     /* printf("Liczba linii: %d\n", lines); */
     if (skanowanie_wykonane == 1)
     {
-        printf("Liczba linii: %d\n", line_count);
-        printf("Liczba zmiennych: %d\n", liczba_zmiennych);
-        printf("Liczba stałych: %d\n", liczba_stalych);
-        printf("Liczba zmiennych typu int: %d\n", liczba_int);
-        printf("Liczba zmiennych typu real: %d\n", liczba_real);
-        printf("Liczba zmiennych typu boolean: %d\n", liczba_boolean);
-        printf("Liczba zmiennych typu character: %d\n", liczba_character);
-        printf("Liczba zmiennych typu string: %d\n", liczba_string);
-        printf("Liczba tablic: %d\n", liczba_tablic);
+        printf("Program poprawny składniowo.\n");
+        if (line_count > 0)
+            printf("Liczba linii: %d\n", line_count);
+        if (liczba_zmiennych > 0)
+            printf("Liczba zmiennych: %d\n", liczba_zmiennych);
+        if (liczba_stalych > 0)
+            printf("Liczba stałych: %d\n", liczba_stalych);
+        if (liczba_int > 0)
+            printf("Liczba zmiennych typu int: %d\n", liczba_int);
+        if (liczba_real > 0)
+            printf("Liczba zmiennych typu real: %d\n", liczba_real);
+        if (liczba_boolean > 0)
+            printf("Liczba zmiennych typu boolean: %d\n", liczba_boolean);
+        if (liczba_character > 0)
+            printf("Liczba zmiennych typu character: %d\n", liczba_character);
+        if (liczba_string > 0)
+            printf("Liczba zmiennych typu string: %d\n", liczba_string);
+        if (liczba_tablic > 0)
+            printf("Liczba tablic: %d\n", liczba_tablic);
+        if (liczba_komentarzy > 0)
+            printf("Liczba komentarzy: %d\n", liczba_komentarzy);
+        if (liczba_write > 0)
+            printf("Liczba instrukcji write: %d\n", liczba_write);
+        if (liczba_writeln > 0)
+            printf("Liczba instrukcji writeln: %d\n", liczba_writeln);
+        if (liczba_read > 0)
+            printf("Liczba instrukcji read: %d\n", liczba_read);
+        if (liczba_readln > 0)
+            printf("Liczba instrukcji readln: %d\n", liczba_readln);
+    }
+    else
+    {
+        printf("Program niepoprawny składniowo.\n");
     }
 
 
