@@ -29,7 +29,7 @@ program test;
                   begin
                         writeln('Podana liczba jest ujemna.');
                   end;
-              repeat
+            repeat
     		writeln('siema');
     		liczba := liczba + 1;
             procedure rozw_nies;
@@ -40,8 +40,8 @@ program test;
   		until liczba > 10;
 	      function funkcja (n:string):integer; 
 		    begin
-		          {test}
-		          write(test);
+		          {zmienna2 to zmienna}
+		          write(zmienna2);
 	            end
 	      function funk2cja (n:integer; s:string):integer;
 		    const

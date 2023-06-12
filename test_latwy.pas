@@ -14,7 +14,7 @@ var
 
 function funkcja (n:string):integer; 
       begin
-            write(test);
+            write('test');
       end
 
 function funk2cja (n:integer; s:string):integer;

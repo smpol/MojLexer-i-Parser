@@ -33,7 +33,7 @@ int skanowanie_wykonane = 0;
 %token PROGRAM NAZWA TBEGIN END
 
 %token DWUKROPEK SREDNIK PRZECINEK TABLICA_LEFT TABLICA_RIGHT
-%token ROWNE KROPKA DWIEKROPKI APOSTROF
+%token ROWNE KROPKA DWIEKROPKI 
 
 %token CONST VAR INTEGER REAL BOOLEAN CHARACTER STRING ASSIGN
 
@@ -45,13 +45,13 @@ int skanowanie_wykonane = 0;
 
 %token EXIT BREAK HALT
 
-%token WRITE WRITELN READ READLN
+%token WRITE WRITELN READ READLN APOSTROF
 
 %token IF ELSE THEN
 
 %token FUNCTION TPROCEDURE
 
-%token CYFRY NAPIS NAWIAS_LEWY NAWIAS_PRAWY MNIEJSZE WIEKSZE CYFRY_FLOAT W_NAWIAS KLAMRA_LEWA KLAMRA_PRAWA W_KLAMRA
+%token CYFRY NAPIS NAWIAS_LEWY NAWIAS_PRAWY MNIEJSZE WIEKSZE CYFRY_FLOAT KLAMRA_LEWA KLAMRA_PRAWA W_KLAMRA
 
 %%
 poczatek    : PROGRAM NAZWA SREDNIK pocz_blok srodek_blok koniec  {
@@ -74,10 +74,14 @@ srodek_blok: srodek_blok funkcja
             | if srodek_blok
             | while srodek_blok
             | for srodek_blok
-            | WRITE W_NAWIAS SREDNIK srodek_blok {liczba_write++;}
-            | WRITELN W_NAWIAS SREDNIK srodek_blok {liczba_writeln++;}
-            | READ W_NAWIAS SREDNIK srodek_blok {liczba_read++;}
-            | READLN W_NAWIAS SREDNIK srodek_blok {liczba_readln++;}
+            | WRITE NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK srodek_blok {liczba_write++;}
+            | WRITE NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK srodek_blok {liczba_write++;}
+            | WRITELN NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK srodek_blok {liczba_writeln++;}
+            | WRITELN NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK srodek_blok {liczba_writeln++;}
+            | READ NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK srodek_blok {liczba_read++;}
+            | READ NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK srodek_blok {liczba_read++;}
+            | READLN NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK srodek_blok {liczba_readln++;}
+            | READLN NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK srodek_blok {liczba_readln++;}
             | W_KLAMRA srodek_blok {liczba_komentarzy++;}
             | przypisanie_wartosci srodek_blok
             | repeat srodek_blok
@@ -158,18 +162,27 @@ warunek_symbol: MNIEJSZE
 
 
 
-funkcja: FUNCTION NAZWA W_NAWIAS DWUKROPEK typ_zmiennej_funkcja SREDNIK  funkcje_srodek_poczatek END funkcja {liczba_funkcji++;}
-        | FUNCTION NAZWA W_NAWIAS DWUKROPEK typ_zmiennej_funkcja SREDNIK funkcje_srodek_poczatek END {liczba_funkcji++;}
+funkcja: FUNCTION NAZWA NAWIAS_LEWY warunknki_srodek NAWIAS_PRAWY DWUKROPEK typ_zmiennej_funkcja SREDNIK  funkcje_srodek_poczatek END funkcja {liczba_funkcji++;}
+        | FUNCTION NAZWA NAWIAS_LEWY warunknki_srodek NAWIAS_PRAWY DWUKROPEK typ_zmiennej_funkcja SREDNIK funkcje_srodek_poczatek END {liczba_funkcji++;}
         ;
+warunknki_srodek: NAZWA warunknki_srodek
+                    | CYFRY warunknki_srodek
+                    | CYFRY_FLOAT warunknki_srodek
+                    | DWUKROPEK warunknki_srodek
+                    | PRZECINEK warunknki_srodek
+                    | SREDNIK warunknki_srodek
+                    | PRZECINEK warunknki_srodek
+                    | typ_zmiennej_funkcja warunknki_srodek
+                    | ;       
 
 /* funkcja_srodek: zmienne 
                 | stale 
                 | zmienne stale 
                 | stale zmienne 
-                | WRITE W_NAWIAS SREDNIK 
-                | WRITELN W_NAWIAS SREDNIK 
-                | READ W_NAWIAS SREDNIK 
-                | READLN W_NAWIAS SREDNIK
+                | WRITE NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK 
+                | WRITELN NAPIS SREDNIK 
+                | READ NAPIS SREDNIK 
+                | READLN NAPIS SREDNIK
                 |
                 ; */
 
@@ -182,10 +195,14 @@ funkcje_srodek_poczatek: zmienne funkcje_srodek_poczatek
                 | W_KLAMRA funkcje_srodek_poczatek {liczba_komentarzy++;}
                 ;
 funkcje_srodek_dalej:
-                | WRITE W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_write++;}
-                | WRITELN W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_writeln++;}
-                | READ W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_read++;}
-                | READLN W_NAWIAS SREDNIK funkcje_srodek_dalej {liczba_readln++;}
+                | WRITE NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_write++;}
+                | WRITE NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_write++;}
+                | WRITELN NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_writeln++;}
+                | WRITELN NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_writeln++;}
+                | READ NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_read++;}
+                | READ NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_read++;}
+                | READLN NAWIAS_LEWY NAPIS NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_readln++;}
+                | READLN NAWIAS_LEWY NAZWA NAWIAS_PRAWY SREDNIK funkcje_srodek_dalej {liczba_readln++;}
                 | W_KLAMRA funkcje_srodek_dalej {liczba_komentarzy++;}
                 | if funkcje_srodek_dalej
                 |

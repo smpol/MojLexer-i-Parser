@@ -8,7 +8,6 @@
 %}
 
 string_text '[^']*'
-integer_with_dot [0-9]+\.[0-9]+
 
 %%
 
@@ -25,7 +24,6 @@ integer_with_dot [0-9]+\.[0-9]+
 "="             {return ROWNE;}
 "."             {return KROPKA;}
 ".."            {return DWIEKROPKI;}
-"'"             {return APOSTROF;}
 "("             {return NAWIAS_LEWY;}
 ")"             {return NAWIAS_PRAWY;}
 "{"             {return KLAMRA_LEWA;}
@@ -39,6 +37,7 @@ integer_with_dot [0-9]+\.[0-9]+
 "character"     {return CHARACTER;}
 "string"        {return STRING;}
 ":="            {return ASSIGN;}
+"'"             {return APOSTROF;}
 
 "array"         {return ARRAY;}
 "of"            {return OF;}
@@ -80,7 +79,7 @@ integer_with_dot [0-9]+\.[0-9]+
 [0-9]+\.[0-9]+  {return CYFRY_FLOAT;}
 [a-zA-Z_0-9]*   {return NAZWA;}
 
-\(.*\)          {return W_NAWIAS;}
+
 \{.*\}          {return W_KLAMRA;}
 
 {string_text}   {return NAPIS;}
