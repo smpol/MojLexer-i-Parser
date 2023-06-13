@@ -273,7 +273,3 @@ int yyerror(char *s) {
     printf("Błąd: %s\n", s);
     return 0;
 }
-
-
-
-

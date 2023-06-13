@@ -10,7 +10,6 @@
 warunek_tekst '[^']*'
 
 %%
-
 "program"       {return PROGRAM;}
 "nazwa"         {return NAZWA;}
 "begin"         {return PASCAL_BEGIN;}
