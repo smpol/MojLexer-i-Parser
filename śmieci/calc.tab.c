@@ -1237,7 +1237,7 @@ yyreduce:
 
      Otherwise, the following line sets YYVAL to garbage.
      This behavior is undocumented and Bison
-     users should not rely upon it.  Assigning to YYVAL
+     users should not rely upon it.  PRZYPISACing to YYVAL
      unconditionally makes the parser a bit smaller, and it avoids a
      GCC warning that YYVAL may be used uninitialized.  */
   yyval = yyvsp[1-yylen];

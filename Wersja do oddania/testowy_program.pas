@@ -35,13 +35,13 @@ program test;
                         writeln('test test');
                   end;
             repeat
-                  writeln('test');
-                  liczba := liczba + 1;
-                  procedure testowa_procedura;
-                        begin
-                              writeln('NIE MA WARTOSCI OPTYMALNEJ');
-                              halt
-                        end;
+    		writeln('test');
+    		liczba := liczba + 1;
+            procedure testowa_procedura;
+                  begin
+                  writeln('NIE MA WARTOSCI OPTYMALNEJ');
+                  halt
+                  end;
   		until liczba > 10;
 	      function funkcja (n:string):integer; 
 		    begin

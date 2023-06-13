@@ -4,7 +4,7 @@ const
   PI = 3.14159;
   GRAVITY = 9.8;
   MAX_VALUE = 100;
-  napis = 'string';
+  WARUNEK_TEKST = 'string';
 
 var
   radius: array [2..5] of integer;
@@ -35,7 +35,7 @@ end
 	begin
 		write('silnia');
 		a:=20;
-		b:='napis';
+		b:='WARUNEK_TEKST';
 		if a > 0 and b >= 0 or c = 2 or b < 2 and d <= 10 or not d then
 			begin
 					writeln('if');

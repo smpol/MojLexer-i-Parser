@@ -5,7 +5,7 @@ program test;
             PI = 3.14159;
             GRAVITY = 9.8;
             MAX_VALUE = 100;
-            napis = 'string';
+            WARUNEK_TEKST = 'string';
       var
             {test}
             a, b, c, d, e, f, g, h, i, j, k, l, m, n: integer;

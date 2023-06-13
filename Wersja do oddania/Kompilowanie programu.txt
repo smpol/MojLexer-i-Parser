@@ -1,0 +1,13 @@
+Aby skompilować program należy wykonać komendy:
+* lex program.l
+* yacc -d program.y
+* gcc y.tab.c lex.yy.c -lfl
+
+Po poprawnym skompilowaniu aby uruchomić program należy użyć komendy:
+"./a.out < {plik pascal}" czyli np. "./a.out < testowy_program.pas" lub ./a.out i ręcznie wpisać treść kodu.
+
+Wraz z program załączam przykładowy kod pascal "testowy_program.pas" z którym działa lexer i parser.
+
+Lexer i Parser jest autorstwa Michała Przysiężnego (Numer indeksu 313016)
+
+Program testowany na serwerze wydziałowym lts.mat.umk.pl
