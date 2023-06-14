@@ -270,6 +270,6 @@ int main() {
 
 int yyerror(char *s) {
     printf("----------------------\n");
-    printf("Błąd: %s\n", s);
+    printf("Wystapil blad: %s\n", s);
     return 0;
 }

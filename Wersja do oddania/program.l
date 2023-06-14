@@ -10,22 +10,6 @@
 warunek_tekst '[^']*'
 
 %%
-"program"       {return PROGRAM;}
-"nazwa"         {return NAZWA;}
-"begin"         {return PASCAL_BEGIN;}
-"end"           {return END;}
-":"             {return DWUKROPEK;}
-";"             {return SREDNIK;}
-","             {return PRZECINEK;}
-"["             {return TABLICA_LEWO;}
-"]"             {return TABLICA_PRAWO;}
-"="             {return ROWNA_SIE;}
-"."             {return KROPKA;}
-".."            {return DWIEKROPKI;}
-"("             {return NAWIAS_LEWY;}
-")"             {return NAWIAS_PRAWY;}
-"const"         {return CONST;}
-"var"           {return VAR;}
 "integer"       {return INTEGER;}
 "real"          {return REAL;}
 "boolean"       {return BOOLEAN;}
@@ -43,6 +27,8 @@ warunek_tekst '[^']*'
 "not"           {return NOT;}
 "while"         {return WHILE;}
 "do"            {return DO;}
+";"             {return SREDNIK;}
+","             {return PRZECINEK;}
 "repeat"        {return REPEAT;}
 "until"         {return UNTIL;}
 "for"           {return FOR;}
@@ -58,6 +44,20 @@ warunek_tekst '[^']*'
 "then"          {return THEN;}
 "function"      {return FUNCTION;}
 "procedure"     {return PASCAL_PROCEDURE;}
+"["             {return TABLICA_LEWO;}
+"]"             {return TABLICA_PRAWO;}
+"="             {return ROWNA_SIE;}
+"."             {return KROPKA;}
+".."            {return DWIEKROPKI;}
+"("             {return NAWIAS_LEWY;}
+")"             {return NAWIAS_PRAWY;}
+"const"         {return CONST;}
+"var"           {return VAR;}
+"program"       {return PROGRAM;}
+"nazwa"         {return NAZWA;}
+"begin"         {return PASCAL_BEGIN;}
+"end"           {return END;}
+":"             {return DWUKROPEK;}
 [0-9]+          {return CYFRY;}
 [0-9]+\.[0-9]+  {return CYFRY_FLOAT;}
 [a-zA-Z_0-9]*   {return NAZWA;}
